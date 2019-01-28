@@ -16,7 +16,7 @@ mongoose.connect(
 var db = mongoose.connection;
 var port = process.env.PORT || 8080;
 
-const corsHeader = (req, res) => {
+const corsHeader = (req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
 
   // Request methods you wish to allow
@@ -34,6 +34,7 @@ const corsHeader = (req, res) => {
   // Set to true if you need the website to include cookies in the requests sent
   // to the API (e.g. in case you use sessions)
   res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
 };
 
 app.get("/", corsHeader, (req, res) => {
