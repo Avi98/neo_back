@@ -15,7 +15,29 @@ mongoose.connect(
 );
 var db = mongoose.connection;
 var port = process.env.PORT || 8080;
-app.get("/", (req, res) => res.send("Hello World with Express"));
+
+const corsHeader = (res, req) => {};
+
+app.get("/", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type"
+  );
+
+  // Set to true if you need the website to include cookies in the requests sent
+  // to the API (e.g. in case you use sessions)
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.send("Hello World with Express");
+});
 app.use("/api", apiRoutes);
 app.listen(port, function() {
   console.log("Running RestHub on port " + port);
