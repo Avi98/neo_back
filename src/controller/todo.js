@@ -15,10 +15,23 @@ exports.addTodo = (req, res) => {
 };
 exports.updateTodo = (req, res) => {
   todo
-    .findByIdAndUpdate(req.params.id, req.body, { new: true })
+    .findById(req.params.id)
     .exec()
-    .then(res => {
-      res.json({ message: "Updated Todo" });
+    .then(result => {
+      // first find the obj to be updated
+      const updatedObj = {
+        ...result._,
+        ...req.body
+      };
+      todo
+        .findByIdAndUpdate(req.params.id, updatedObj, { new: true })
+        .exec()
+        .then(res => {
+          res.json({ message: "Updated Todo" });
+        })
+        .catch(err => {
+          res.json({ message: err });
+        });
     })
     .catch(err => {
       res.json({ message: err });
