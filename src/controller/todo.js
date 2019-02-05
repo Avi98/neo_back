@@ -26,8 +26,8 @@ exports.updateTodo = (req, res) => {
       todo
         .findByIdAndUpdate(req.params.id, updatedObj, { new: true })
         .exec()
-        .then(res => {
-          res.json({ message: "Updated Todo" });
+        .then(resQ => {
+          res.json({ resQ });
         })
         .catch(err => {
           res.json({ message: err });
